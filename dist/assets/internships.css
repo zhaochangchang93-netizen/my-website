@@ -1,0 +1,165 @@
+/* The back, papers and front share one stage so the papers cannot leak below the pocket. */
+.internships {
+  --archive-font: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --archive-ease: cubic-bezier(.22,.8,.24,1);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(4rem, 7vw, 7rem) 24px 2.5rem;
+  color: #153e31;
+  background: radial-gradient(ellipse at 50% 65%, #e5f2e8, transparent 65%), #f5f8f2;
+}
+.internships::before { position: absolute; z-index: 0; top: clamp(1rem, 3vw, 2.8rem); left: 50%; content: "INTERNSHIPS"; color: rgba(24,120,95,.07); font-family: "Shantell Sans ExtraBold Italic", cursive; font-size: clamp(3rem, 11.5vw, 11rem); font-weight: 800; font-style: italic; line-height: .85; transform: translateX(-50%) rotate(-2deg); white-space: nowrap; pointer-events: none; }
+.internship-inner { position: relative; z-index: 1; width: min(1560px, 100%); margin: 0 auto; }
+.internship-heading { display: flex; flex-direction: column; align-items: center; gap: 0; max-width: 1300px; margin: auto; text-align: center; }
+.internship-heading > div, .internship-heading h2, .internship-heading p { width: 100%; text-align: center; }
+.internship-eyebrow { font: italic 800 14px/1.5 var(--archive-font); color: #548773; letter-spacing: .07em; }
+.internship-eyebrow i { display: none; }
+.internship-heading h2 { margin: 38px 0 0; font-family: "Muyao Softbrush", "Noto Sans SC", cursive; font-size: clamp(46px, 6.2vw, 84px); font-weight: 700; font-synthesis: weight; line-height: 1.12; letter-spacing: .015em; }
+.internship-heading p { margin: 10px 0 0; color: #6a8175; font-size: 16px; line-height: 1.7; }
+.archive-layout { position: relative; margin-top: 16px; }
+.internship-folder {
+  --pocket-width: 580px;
+  --paper-width: 430px;
+  --paper-height: 490px;
+  --expanded-paper-height: 860px;
+  --pocket-bottom: 72px;
+  position: relative;
+  height: 590px;
+  isolation: isolate;
+  transition: height .85s var(--archive-ease);
+}
+.folder-back {
+  position: absolute;
+  z-index: 1;
+  bottom: calc(var(--pocket-bottom) + 12px);
+  left: 50%;
+  width: calc(var(--pocket-width) - 24px);
+  height: 340px;
+  border: 1px solid #7caf94;
+  border-radius: 20px 22px 26px 26px;
+  background: linear-gradient(135deg, #a4d3b4, #77ad92);
+  transform: translateX(-50%) rotate(-4deg);
+  transition: transform .85s var(--archive-ease);
+}
+.folder-front {
+  position: absolute;
+  z-index: 4;
+  bottom: var(--pocket-bottom);
+  left: 50%;
+  width: var(--pocket-width);
+  height: 290px;
+  padding: 0;
+  border: 2px solid #5d9078;
+  border-radius: 28px;
+  background: linear-gradient(155deg, #b7dec6 0%, #a3d2b6 46%, #8dbc9f 100%);
+  box-shadow: inset 0 0 0 5px #eef5e9, inset 0 0 0 7px #b8d7bf, 0 25px 38px -18px #254f363d;
+  color: #376b53;
+  cursor: pointer;
+  transform: translateX(-50%) perspective(1200px) rotate(-4deg) rotateX(-5deg);
+  transform-origin: center bottom;
+  transition: transform .85s var(--archive-ease), height .85s var(--archive-ease), box-shadow .3s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.folder-front:hover { box-shadow: inset 0 0 0 5px #f6faf0, inset 0 0 0 7px #b8d7bf, 0 28px 42px -17px #254f364d; }
+.folder-front:focus-visible { outline: 3px solid #256d52; outline-offset: 8px; }
+.folder-slot { position: absolute; top: 25px; left: 50%; width: 45px; height: 4px; border-radius: 5px; background: #739d8066; box-shadow: 0 1px 0 #e6f6dc80; transform: translateX(-50%); }
+.folder-title { position: absolute; right: 34px; bottom: 40px; font: 700 18px/1.4 var(--archive-font); color: #3c74597a; letter-spacing: .12em; }
+.folder-indicators { position: absolute; left: 48px; bottom: 38px; display: flex; gap: 35px; align-items: center; }
+.folder-indicators i { width: 12px; height: 12px; border: 1px solid #f1f6d94d; border-radius: 50%; background: #bf936d; }
+.folder-indicators i:nth-child(2) { background: #739ca1; }
+.folder-indicators i:nth-child(3) { width: 18px; height: 18px; background: #7cad91; box-shadow: 0 0 0 4px #e2efdb66, inset 0 0 0 2px #b9d8bf; }
+.experience-deck { position: absolute; z-index: 2; inset: 0; pointer-events: none; }
+.experience-card {
+  --closed-x: 0px;
+  --closed-y: -36px;
+  --closed-angle: -3deg;
+  --open-x: 0px;
+  --open-y: -30px;
+  --open-angle: 1deg;
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--pocket-bottom) + 30px);
+  display: block;
+  width: var(--paper-width);
+  height: var(--paper-height);
+  padding: 28px;
+  overflow: hidden;
+  border: 9px solid #fffef8;
+  border-radius: 14px;
+  outline: 1px solid #d9ded3;
+  background: #e6eecd;
+  box-shadow: 0 15px 26px -8px #263f3926;
+  transform-origin: center bottom;
+  transform: translateX(-50%) translate(var(--closed-x), var(--closed-y)) rotate(var(--closed-angle)) scale(.72);
+  transition: transform .9s var(--archive-ease), bottom .9s var(--archive-ease), width .9s var(--archive-ease), height .9s var(--archive-ease), box-shadow .9s ease;
+}
+.experience-card:nth-of-type(1) { color: #f7f6e4; background: #4f826b; }
+.experience-card:nth-of-type(2) { background: #f0efdf; }
+.experience-card:nth-of-type(3) { background: #d9e9b1; }
+.experience-card[data-position="left"] { --closed-x: -110px; --closed-y: -12px; --closed-angle: -14deg; z-index: 1; }
+.experience-card[data-position="center"] { --closed-x: 0px; --closed-y: -36px; --closed-angle: -3deg; z-index: 3; }
+.experience-card[data-position="right"] { --closed-x: 110px; --closed-y: -10px; --closed-angle: 8deg; z-index: 2; }
+.experience-record { display: flow-root; }
+.experience-card h3 { margin: 0; font-size: clamp(26px, 2.2vw, 32px); font-weight: 800; letter-spacing: .02em; line-height: 1.4; white-space: nowrap; }
+.experience-card { pointer-events: auto; cursor: pointer; }
+.experience-select { display: inline-block; margin: 0; padding: 0; border: 0; color: inherit; background: transparent; font: inherit; letter-spacing: inherit; cursor: pointer; text-align: inherit; }
+.experience-select:focus-visible { outline: 2px solid currentColor; outline-offset: 5px; border-radius: 3px; }
+.internships:not(.is-open) .experience-card[data-position="center"] h3 { text-align: center; }
+.internships:not(.is-open) .experience-card[data-position="right"] h3 { text-align: right; }
+.experience-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; margin-top: 12px; font-size: 14px; line-height: 1.7; opacity: .85; }
+.experience-meta time { white-space: nowrap; }
+.experience-card p { margin: 10px 0 0; font-size: 16px; line-height: 1.85; opacity: .9; overflow-wrap: anywhere; }
+.experience-card .experience-overview { margin-top: 22px; padding-bottom: 22px; border-bottom: 1px solid currentColor; }
+.experience-work { margin: 22px 0 0; padding: 0; list-style: none; counter-reset: work; }
+.experience-work li { margin-top: 22px; counter-increment: work; }
+.experience-work li:first-child { margin-top: 0; }
+.experience-work h4 { margin: 0; font-size: 17px; line-height: 1.6; font-weight: 700; }
+.experience-work h4::before { content: counter(work, decimal-leading-zero); display: inline-block; margin-right: 9px; font-size: 13px; opacity: .65; vertical-align: 1px; }
+.cowork-link { display: inline-flex; align-items: center; gap: 5px; margin-left: 10px; padding: 0; color: #79bfff; background: transparent; font-size: 15px; font-weight: 800; line-height: 1.45; text-decoration: none; vertical-align: 1px; }
+.cowork-link-icon { display: grid; width: 16px; height: 16px; place-items: center; border-radius: 4px; color: #fff; background: #5ba9f4; font-size: 11px; line-height: 1; }
+.cowork-link:hover { color: #c6e8ff; text-decoration: underline; text-underline-offset: 3px; }
+.cowork-link:focus-visible { outline: 2px solid #d9f1ff; outline-offset: 4px; }
+.folder-hint { margin: -24px 0 0; text-align: center; color: #708273; font-size: 14px; line-height: 1.6; }
+.internships.is-open .internship-folder { --paper-width: min(760px, 50vw); height: calc(var(--expanded-paper-height) + 418px); }
+.internships.is-open .folder-back { transform: translateX(-50%) rotate(-1deg); }
+.internships.is-open .folder-front { height: 260px; transform: translateX(-50%) perspective(1200px) rotate(-2deg) rotateX(-24deg); }
+.internships.is-open .experience-card {
+  bottom: 338px;
+  height: var(--expanded-paper-height);
+  transform: translateX(-50%) translate(var(--open-x), var(--open-y)) rotate(var(--open-angle)) scale(var(--open-scale));
+  box-shadow: 0 24px 32px -12px #263f393b;
+}
+.internships.is-open .experience-card[data-position="center"] { --open-x: 0%; --open-y: -30px; --open-angle: 0deg; --open-scale: 1; z-index: 3; cursor: default; }
+.internships.is-open .experience-card[data-position="left"] { --open-x: -48%; --open-y: 12px; --open-angle: -5deg; --open-scale: .9; z-index: 1; }
+.internships.is-open .experience-card[data-position="right"] { --open-x: 48%; --open-y: 12px; --open-angle: 5deg; --open-scale: .9; z-index: 2; }
+.internships.is-open .experience-card[data-position="right"] h3 { text-align: right; }
+.internships.is-open .experience-card[data-position="center"] h3 { text-align: left; }
+@media (min-width: 781px) and (max-width: 1450px) {
+  .internship-folder { --paper-width: calc((100vw - 180px) / 3); }
+  .experience-card { padding: 22px; }
+}
+@media (max-width: 1100px) {
+  .internships { padding: 56px 18px 35px; }
+  .internship-heading { display: block; }
+  .internship-heading p { margin-top: 15px; font-size: 14px; }
+  .internship-folder { --pocket-width: min(82vw, 440px); --paper-width: min(82vw, 600px); --paper-height: 470px; --pocket-bottom: 45px; height: 440px; }
+  .folder-back { height: 230px; border-radius: 16px; }
+  .folder-front { height: 200px; border-radius: 22px; }
+  .folder-title { right: 24px; bottom: 28px; font-size: 12px; }
+  .folder-indicators { left: 26px; bottom: 30px; gap: 20px; }
+  .folder-indicators i { width: 8px; height: 8px; }
+  .folder-indicators i:nth-child(3) { width: 12px; height: 12px; }
+  .experience-card { padding: 22px; transform: translateX(-50%) translate(var(--closed-x), var(--closed-y)) rotate(var(--closed-angle)) scale(.51); }
+  .experience-card[data-position="left"] { --closed-x: -44px; --closed-y: 0px; }
+  .experience-card[data-position="center"] { --closed-y: -18px; }
+  .experience-card[data-position="right"] { --closed-x: 46px; --closed-y: 0px; }
+  .experience-card h3 { font-size: clamp(24px, 5vw, 28px); }
+  .internships.is-open .internship-folder { --paper-width: min(82vw, 660px); height: calc(var(--expanded-paper-height) + 360px); }
+  .internships.is-open .folder-front { height: 185px; }
+  .internships.is-open .experience-card { bottom: 240px; }
+  .internships.is-open .experience-card[data-position="left"] { --open-x: -10%; --open-y: 12px; --open-angle: -2deg; --open-scale: .9; }
+  .internships.is-open .experience-card[data-position="right"] { --open-x: 10%; --open-y: 12px; --open-angle: 2deg; --open-scale: .9; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .internship-folder, .folder-front, .folder-back, .experience-card { transition: none; }
+}
